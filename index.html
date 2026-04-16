@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>I'm Sorry 💖</title>
+<title>Forgive Me 💖</title>
 
 <style>
 body {
@@ -16,62 +16,62 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* CARD */
 .card {
     background: #ffe6ea;
     padding: 40px;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     width: 320px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     z-index: 2;
 }
 
 .emoji {
     font-size: 60px;
-    margin-bottom: 15px;
 }
 
 h1 {
     color: #e75480;
-    font-size: 22px;
-    margin-bottom: 10px;
 }
 
 #message {
     font-size: 14px;
     color: #555;
     min-height: 40px;
-    margin-bottom: 20px;
+    margin: 15px 0;
 }
 
-.buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+/* YES BUTTON */
+#yesBtn {
+    background: #ff8fa3;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
 }
 
-/* buttons */
-button {
+#yesBtn:hover {
+    background: #ff5c7a;
+}
+
+/* NO BUTTON (separate layer) */
+#noBtn {
+    position: fixed;
+    top: 70%;
+    left: 65%;
     background: #ff8fa3;
     border: none;
     padding: 10px 20px;
     border-radius: 10px;
     color: white;
-    font-size: 16px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: transform 0.2s;
 }
 
-button:hover {
-    background: #ff5c7a;
-}
-
-/* FIXED NO BUTTON */
-#noBtn {
-    position: fixed;
-}
-
-/* hearts */
+/* HEARTS */
 .heart {
     position: absolute;
     font-size: 20px;
@@ -79,14 +79,8 @@ button:hover {
 }
 
 @keyframes float {
-    from {
-        transform: translateY(100vh);
-        opacity: 1;
-    }
-    to {
-        transform: translateY(-10vh);
-        opacity: 0;
-    }
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
 }
 </style>
 </head>
@@ -97,58 +91,60 @@ button:hover {
     <div class="emoji">😭</div>
     <h1>Will you forgive me?</h1>
     <div id="message"></div>
-
-    <div class="buttons">
-        <button onclick="forgive()">Yes 💕</button>
-        <button id="noBtn" onmouseover="moveNo()">No 😢</button>
-    </div>
+    <button id="yesBtn" onclick="forgive()">Yes 💕</button>
 </div>
 
-<!-- background music -->
+<!-- NO BUTTON OUTSIDE -->
+<button id="noBtn" onmouseover="moveNo()">No 😢</button>
+
+<!-- MUSIC -->
 <audio autoplay loop>
-    <source src="https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3" type="audio/mpeg">
+    <source src="https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3">
 </audio>
 
 <script>
-// INTRO TYPEWRITER
-const introText = "I’m really sorry... I didn’t mean to hurt you 🥺";
+// INTRO TEXT
+const intro = "I’m really sorry... I didn’t mean to hurt you 🥺";
 let i = 0;
 
 function typeIntro() {
-    if (i < introText.length) {
-        document.getElementById("message").innerHTML += introText.charAt(i);
+    if (i < intro.length) {
+        document.getElementById("message").innerHTML += intro[i];
         i++;
         setTimeout(typeIntro, 40);
     }
 }
 typeIntro();
 
-// YES BUTTON → LETTER
+// YES CLICK → LETTER
 function forgive() {
     const card = document.getElementById("card");
 
     card.innerHTML = `
         <div style="font-size:50px;">💌</div>
         <h2 style="color:#e75480;">For You...</h2>
-        <p id="letter" style="color:#555; font-size:14px; min-height:80px;"></p>
+        <p id="letter"></p>
     `;
 
-    const message = "I know I hurt you, and I'm really sorry... 🥺 I didn’t mean to make you feel that way. You mean a lot to me, and I truly hope we can fix this together. 💖";
+    const text = "I know I hurt you, and I'm really sorry... 🥺 You mean a lot to me. I truly hope we can fix this together 💖";
 
     let j = 0;
     function typeLetter() {
-        if (j < message.length) {
-            document.getElementById("letter").innerHTML += message.charAt(j);
+        if (j < text.length) {
+            document.getElementById("letter").innerHTML += text[j];
             j++;
             setTimeout(typeLetter, 40);
         }
     }
 
     typeLetter();
+
+    // hide NO button after yes
+    document.getElementById("noBtn").style.display = "none";
 }
 
-// NO BUTTON MOVE + SHRINK
-let size = 1;
+// NO BUTTON RUN + SHRINK
+let scale = 1;
 
 function moveNo() {
     const btn = document.getElementById("noBtn");
@@ -159,27 +155,25 @@ function moveNo() {
     btn.style.left = x + "px";
     btn.style.top = y + "px";
 
-    size -= 0.1;
-    btn.style.transform = scale(${size});
+    scale -= 0.1;
+    btn.style.transform = scale(${scale});
 }
 
 // HEARTS
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "💖";
+function heart() {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "💖";
 
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = (Math.random() * 20 + 10) + "px";
 
-    document.body.appendChild(heart);
+    document.body.appendChild(h);
 
-    setTimeout(() => {
-        heart.remove();
-    }, 6000);
+    setTimeout(() => h.remove(), 6000);
 }
 
-setInterval(createHeart, 300);
+setInterval(heart, 300);
 </script>
 
 </body>
