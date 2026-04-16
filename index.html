@@ -2,120 +2,175 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Forgive Me 💕</title>
+<title>I'm Sorry 💖</title>
+
 <style>
-    body {
-        margin: 0;
-        height: 100vh;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(to bottom, #f7b6c2, #fcd3da);
-        font-family: Arial, sans-serif;
-    }
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #f7b6c2, #fcd3da);
+    font-family: Arial, sans-serif;
+}
 
-    .card {
-        background: #ffe6ea;
-        padding: 40px;
-        border-radius: 20px;
-        text-align: center;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        width: 300px;
-        position: relative;
-        z-index: 2;
-    }
+.card {
+    background: #ffe6ea;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 320px;
+    z-index: 2;
+}
 
-    .emoji {
-        font-size: 60px;
-        margin-bottom: 20px;
-    }
+.emoji {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
 
-    h1 {
-        color: #e75480;
-        font-size: 22px;
-        margin-bottom: 20px;
-    }
+h1 {
+    color: #e75480;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
 
-    .buttons {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-    }
+#message {
+    font-size: 14px;
+    color: #555;
+    min-height: 40px;
+    margin-bottom: 20px;
+}
 
-    button {
-        background: #ff8fa3;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 10px;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-        transition: 0.3s;
-        position: relative;
-    }
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+}
 
-    button:hover {
-        background: #ff5c7a;
-    }
+button {
+    background: #ff8fa3;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    position: relative;
+}
 
-    #noBtn {
-        position: absolute;
-    }
+button:hover {
+    background: #ff5c7a;
+}
 
-    /* Floating hearts */
-    .heart {
-        position: absolute;
-        color: pink;
-        font-size: 20px;
-        animation: float 6s linear infinite;
-    }
+#noBtn {
+    position: absolute;
+}
 
-    @keyframes float {
-        from {
-            transform: translateY(100vh) scale(1);
-            opacity: 1;
-        }
-        to {
-            transform: translateY(-10vh) scale(1.5);
-            opacity: 0;
-        }
+/* hearts */
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: float 6s linear infinite;
+}
+
+@keyframes float {
+    from {
+        transform: translateY(100vh);
+        opacity: 1;
     }
+    to {
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+}
 </style>
 </head>
+
 <body>
 
-<div class="card">
+<div class="card" id="card">
     <div class="emoji">😭</div>
     <h1>Will you forgive me?</h1>
+    <div id="message"></div>
+
     <div class="buttons">
         <button onclick="forgive()">Yes 💕</button>
         <button id="noBtn" onmouseover="moveNo()">No 😢</button>
     </div>
 </div>
 
+<!-- background music -->
+<audio id="bgm" autoplay loop>
+    <source src="https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3" type="audio/mpeg">
+</audio>
+
 <script>
+// INTRO TYPEWRITER
+const introText = "I’m really sorry... I didn’t mean to hurt you 🥺";
+let i = 0;
+
+function typeIntro() {
+    if (i < introText.length) {
+        document.getElementById("message").innerHTML += introText.charAt(i);
+        i++;
+        setTimeout(typeIntro, 40);
+    }
+}
+typeIntro();
+
+// YES BUTTON → SHOW LETTER
 function forgive() {
-    alert("Yayyy thank you 😭💖 I won't mess up again!");
+    const card = document.getElementById("card");
+
+    card.innerHTML = `
+        <div style="font-size:50px;">💌</div>
+        <h2 style="color:#e75480;">For You...</h2>
+        <p id="letter" style="color:#555; font-size:14px; min-height:80px;"></p>
+    `;
+
+    const message = "I know I hurt you, and I'm really sorry... 🥺 I didn’t mean to make you feel that way. You mean a lot to me, and I truly hope we can fix this together. 💖";
+
+    let j = 0;
+    function typeLetter() {
+        if (j < message.length) {
+            document.getElementById("letter").innerHTML += message.charAt(j);
+            j++;
+            setTimeout(typeLetter, 40);
+        }
+    }
+
+    typeLetter();
 }
 
-// Move "No" button randomly
+// NO BUTTON MOVE + SHRINK
+let size = 1;
+
 function moveNo() {
     const btn = document.getElementById("noBtn");
+
     const x = Math.random() * (window.innerWidth - 100);
     const y = Math.random() * (window.innerHeight - 50);
+
     btn.style.left = x + "px";
     btn.style.top = y + "px";
+
+    size -= 0.1;
+    btn.style.transform = scale(${size});
 }
 
-// Create floating hearts
+// HEARTS
 function createHeart() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
-    heart.innerText = "💖";
+    heart.innerHTML = "💖";
+
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.fontSize = (Math.random() * 20 + 10) + "px";
-    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
 
     document.body.appendChild(heart);
 
