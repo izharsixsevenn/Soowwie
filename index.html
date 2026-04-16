@@ -40,8 +40,7 @@ h1{
     display:flex;
     justify-content:center;
     margin:40px auto;
-    z-index:1;
-    position:relative;
+    transition:0.6s ease;
 }
 
 .envelope{
@@ -69,7 +68,6 @@ h1{
     background:white;
     border-radius:12px;
     padding:18px;
-    z-index:2;
     font-family:'Great Vibes',cursive;
     font-size:24px;
     color:#5a0000;
@@ -93,17 +91,21 @@ button{
 .yes{background:#ff2e2e;color:white;}
 .no{background:#ddd;position:relative;}
 
-/* APOLOGY CARD (FIXED VISIBILITY) */
+/* FIXED CARD (NO MORE BLOCKING ISSUES) */
 .card{
     display:none;
-    position:relative;
-    z-index:999;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    z-index:99999;
+
     background:#fff;
     padding:30px;
     border-radius:20px;
-    box-shadow:0 15px 30px rgba(0,0,0,0.5);
+    box-shadow:0 15px 40px rgba(0,0,0,0.6);
     max-width:600px;
-    margin:40px auto;
+    width:85%;
 }
 
 .script{
@@ -224,7 +226,9 @@ function answerYes(){
     document.getElementById("flowerSelector").style.display="block";
 
     setTimeout(()=>{
-        wrap.style.display="none";   // ✅ FIX: remove envelope completely
+        wrap.style.opacity="0";
+        wrap.style.pointerEvents="none";
+        wrap.style.transform="scale(0)";
         document.getElementById("card").style.display="block";
     },900);
 }
