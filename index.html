@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>I'm Sorry 💔</title>
+<title>I'm Sorry ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
@@ -12,23 +12,22 @@ body{
     font-family:'Poppins',sans-serif;
     text-align:center;
     overflow-x:hidden;
-    background-color:#ffd6e8;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAH0lEQVQYV2NkYGBgYGBg+M9AC1CFIwwGhkF6QYABh0CAGxYEwYAAAAASUVORK5CYII=');
-    background-size: cover;
+    background: linear-gradient(to bottom, #2b0000, #5a0000);
 }
 
 /* TITLE */
 h1{
     font-family:'Parisienne',cursive;
     font-size:56px;
-    color:#b1124c;
+    color:#ff2e2e;
+    margin-top:20px;
 }
 
 /* HEARTS */
 .heart{
     position:fixed;
     top:-10px;
-    color:rgba(255,0,100,0.6);
+    color:rgba(255,80,80,0.8);
     font-size:20px;
     animation:fall linear infinite;
 }
@@ -41,12 +40,14 @@ h1{
     display:flex;
     justify-content:center;
     margin:40px auto;
+    z-index:1;
+    position:relative;
 }
 
 .envelope{
     width:320px;
     height:220px;
-    background:#f8b6c8;
+    background:#7a0000;
     position:relative;
     cursor:pointer;
     border-radius:14px;
@@ -55,7 +56,7 @@ h1{
 .flap{
     position:absolute;
     inset:0;
-    background:#e89ab0;
+    background:#a30000;
     clip-path:polygon(0 0,100% 0,50% 55%);
     transform-origin:top;
     transition:transform 0.9s ease;
@@ -71,9 +72,9 @@ h1{
     z-index:2;
     font-family:'Great Vibes',cursive;
     font-size:24px;
+    color:#5a0000;
 }
 
-/* OPEN ANIMATION */
 .envelope.open .flap{
     transform:rotateX(180deg);
 }
@@ -89,25 +90,26 @@ button{
     cursor:pointer;
 }
 
-.yes{background:#ff69b4;color:white;}
+.yes{background:#ff2e2e;color:white;}
 .no{background:#ddd;position:relative;}
 
-/* CARD (SORRY LETTER) */
+/* APOLOGY CARD (FIXED VISIBILITY) */
 .card{
     display:none;
+    position:relative;
+    z-index:999;
     background:#fff;
     padding:30px;
     border-radius:20px;
-    box-shadow:0 15px 30px rgba(0,0,0,0.25);
+    box-shadow:0 15px 30px rgba(0,0,0,0.5);
     max-width:600px;
-    margin:20px auto;
-    font-family:'Great Vibes',cursive;
+    margin:40px auto;
 }
 
 .script{
     font-family:'Great Vibes',cursive;
     font-size:30px;
-    color:#b1124c;
+    color:#7a0000;
     line-height:1.8;
 }
 
@@ -145,7 +147,7 @@ button{
 
 <body>
 
-<h1>I'm Sorry 💔</h1>
+<h1>I'm Sorry ❤️</h1>
 
 <audio id="music" loop>
   <source src="love.mp3" type="audio/mpeg">
@@ -154,12 +156,12 @@ button{
 <button onclick="toggleMusic()">🎶 Play / Pause Music</button>
 
 <!-- ENVELOPE -->
-<div class="envelope-wrapper">
+<div class="envelope-wrapper" id="envWrap">
     <div class="envelope" id="envelope">
         <div class="flap"></div>
         <div class="letter">
             <p>I’m really sorry... 🥺</p>
-            <button class="yes" onclick="answerYes()">Forgive Me 💖</button>
+            <button class="yes" onclick="answerYes()">Forgive Me ❤️</button>
             <button class="no" onmouseover="moveNo(this)">No 😢</button>
         </div>
     </div>
@@ -167,18 +169,18 @@ button{
 
 <!-- FLOWER SELECTOR -->
 <div id="flowerSelector">
-  <button onclick="startFlowers('💖')" class="yes">Hearts 💖</button>
-  <button onclick="startFlowers('🌸')" class="yes">Flowers 🌸</button>
+  <button onclick="startFlowers('❤️')" class="yes">Hearts ❤️</button>
   <button onclick="startFlowers('🌹')" class="yes">Roses 🌹</button>
+  <button onclick="startFlowers('💔')" class="yes">Broken Hearts 💔</button>
 </div>
 
-<!-- SORRY CARD -->
+<!-- APOLOGY CARD -->
 <div class="card" id="card">
 <p class="script">
 I’m truly sorry for what I did.<br><br>
 I never meant to hurt you or make you feel unimportant.<br><br>
-You mean a lot to me, and I hope we can fix this together.<br><br>
-Please forgive me 💔
+You mean everything to me, and I hope you can forgive me.<br><br>
+Please don’t leave me like this ❤️
 </p>
 </div>
 
@@ -188,7 +190,7 @@ Please forgive me 💔
 for(let i=0;i<30;i++){
     let h=document.createElement("div");
     h.className="heart";
-    h.innerHTML="♥️";
+    h.innerHTML="❤️";
     h.style.left=Math.random()*100+"vw";
     h.style.animationDuration=3+Math.random()*5+"s";
     document.body.appendChild(h);
@@ -208,6 +210,8 @@ function toggleMusic(){
 /* ENVELOPE OPEN */
 function answerYes(){
     const envelope=document.getElementById("envelope");
+    const wrap=document.getElementById("envWrap");
+
     envelope.classList.add("open");
 
     const music=document.getElementById("music");
@@ -215,12 +219,12 @@ function answerYes(){
     music.play();
 
     showBows();
-    startFlowers('💖');
+    startFlowers('❤️');
 
     document.getElementById("flowerSelector").style.display="block";
 
     setTimeout(()=>{
-        document.querySelector(".envelope-wrapper").style.display="none";
+        wrap.style.display="none";   // ✅ FIX: remove envelope completely
         document.getElementById("card").style.display="block";
     },900);
 }
