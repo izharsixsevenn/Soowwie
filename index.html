@@ -12,6 +12,7 @@ body{
     font-family:'Poppins',sans-serif;
     text-align:center;
     overflow-x:hidden;
+    padding-top:40px; /* ✅ FIX: push envelope to top */
     background: linear-gradient(to bottom, #2b0000, #5a0000);
 }
 
@@ -20,7 +21,7 @@ h1{
     font-family:'Parisienne',cursive;
     font-size:56px;
     color:#ff2e2e;
-    margin-top:20px;
+    margin-top:10px;
 }
 
 /* HEARTS */
@@ -35,17 +36,15 @@ h1{
     to{transform:translateY(110vh);}
 }
 
-/* ENVELOPE WRAPPER (CENTERED + SAFE SPACE) */
+/* ENVELOPE (NOW TOP HEADER STYLE) */
 .envelope-wrapper{
     display:flex;
     justify-content:center;
-    margin:30px auto;
-    transition:0.6s ease;
+    margin:20px auto 10px auto;
     position:relative;
     z-index:1;
 }
 
-/* BIGGER ENVELOPE FIX */
 .envelope{
     width:420px;
     height:280px;
@@ -53,10 +52,8 @@ h1{
     position:relative;
     cursor:pointer;
     border-radius:16px;
-    transition: transform 0.4s ease;
 }
 
-/* FLAP */
 .flap{
     position:absolute;
     inset:0;
@@ -67,7 +64,6 @@ h1{
     z-index:3;
 }
 
-/* LETTER */
 .letter{
     position:absolute;
     inset:25px;
@@ -78,7 +74,6 @@ h1{
     font-size:26px;
     color:#5a0000;
     line-height:1.4;
-    z-index:2;
 }
 
 /* OPEN ANIMATION */
@@ -100,7 +95,7 @@ button{
 .yes{background:#ff2e2e;color:white;}
 .no{background:#ddd;position:relative;}
 
-/* APOLOGY CARD (NO BLOCKING EVER) */
+/* APOLOGY CARD (CENTER SAFE) */
 .card{
     display:none;
     position:fixed;
@@ -166,7 +161,7 @@ button{
 
 <button onclick="toggleMusic()">🎶 Play / Pause Music</button>
 
-<!-- ENVELOPE -->
+<!-- ENVELOPE (NOW TOP, NOT BLOCKING CONTENT) -->
 <div class="envelope-wrapper" id="envWrap">
     <div class="envelope" id="envelope">
         <div class="flap"></div>
